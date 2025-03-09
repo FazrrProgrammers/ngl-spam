@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam NGL</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input, button { margin: 5px; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Spam NGL Anonymous</h2>
+    <input type="text" id="username" placeholder="Masukkan username NGL" />
+    <input type="text" id="message" placeholder="Pesan spam" />
+    <input type="number" id="count" placeholder="Jumlah pesan" min="1" />
+    <button onclick="startSpam()">Mulai Spam</button>
+
+    <h3>Hasil:</h3>
+    <div id="result"></div>
+
+    <script>
+        function startSpam() {
+            let username = document.getElementById("username").value;
+            let message = document.getElementById("message").value;
+            let count = document.getElementById("count").value;
+
+            if (!username || !message || !count) return alert("Isi semua kolom!");
+
+            axios.post("http://localhost:3000/spam", { username, message, count })
+                .then(res => {
+                    document.getElementById("result").innerHTML = JSON.stringify(res.data, null, 2);
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
+
+</body>
+</html>
